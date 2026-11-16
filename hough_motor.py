@@ -14,7 +14,7 @@ def preprocesar_imagen(ruta_imagen: str, recortar_zoom_derecho: bool = True):
 
     img_color = cv2.imread(ruta_imagen)
 
-    # Si usás la Figura 2 del enunciado, recortamos el recuadro ampliado de la derecha
+    # recortamos el recuadro ampliado de la derecha
     # donde se ve claramente el anillo metálico (aro C) sin las flechas X, Y, Z.
     if recortar_zoom_derecho:
         h, w, _ = img_color.shape
@@ -27,9 +27,7 @@ def preprocesar_imagen(ruta_imagen: str, recortar_zoom_derecho: bool = True):
     return img_color, gris, bordes
 
 
-# ==============================================================================
 # ACTIVIDAD 2: TRANSFORMADA DE HOUGH PARA RECTAS (IMPLEMENTACIÓN EXPLÍCITA)
-# ==============================================================================
 def hough_rectas_manual(bordes: np.ndarray, umbral_votos: int = 65):
     alto, ancho = bordes.shape
     diag_max = int(np.ceil(np.sqrt(ancho**2 + alto**2)))
@@ -65,9 +63,7 @@ def dibujar_rectas(img_color: np.ndarray, rectas: list) -> np.ndarray:
     return resultado
 
 
-# ==============================================================================
 # ACTIVIDAD 3: TRANSFORMADA DE HOUGH PARA CIRCUNFERENCIAS (RADIO CALIBRADO)
-# ==============================================================================
 def hough_circunferencia_optima(bordes: np.ndarray, radio_min: int = 20, radio_max: int = 55):
     """
     Evalúa el espacio acumulador (x0, y0) para el aro 'C' buscando el pico
@@ -128,8 +124,6 @@ if __name__ == "__main__":
     CARPETA_RAIZ = os.path.dirname(os.path.abspath(__file__))
     RUTA_MOTOR = os.path.join(CARPETA_RAIZ, "motor_block.png")
 
-    # Poné recortar_zoom_derecho=True si usás la Figura 2 del TP4,
-    # o False si usás una foto frontal limpia de otro motor.
     img_orig, _, bordes = preprocesar_imagen(RUTA_MOTOR, recortar_zoom_derecho=True)
 
     # 1. Hough Rectas
